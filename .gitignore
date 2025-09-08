@@ -126,3 +126,8 @@ tags
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/c++,emacs,vim,visualstudiocode
+
+### Custom ignoring files ###
+
+# output file
+lines.txt
