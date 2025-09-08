@@ -131,3 +131,6 @@ tags
 
 # output file
 lines.txt
+
+# python venv
+venv
