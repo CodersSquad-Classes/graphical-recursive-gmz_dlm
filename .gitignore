@@ -134,3 +134,6 @@ lines.txt
 
 # python venv
 venv
+
+# python version
+.python-version
