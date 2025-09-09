@@ -18,14 +18,24 @@
  * segment is in the original direction.
  *
  * ## Usage:
+ * Call it as follows:
  *
- * ## Dev notes:
- * - This algorithm has a particularity: every iteration, the number of lines multiplies by 4:
- *   n = 1 -> lines = 4;
- *   n = 2 -> lines = 8;
- *   n = 3 -> lines = 12;
- *   ...
- *   So the stop condition of recursiveness is resultant.size() >= 4*n
+ * ```cpp
+ * Point p0 = {0, 0};
+ * Point p1 = {1000, 0};
+ * Line l = {p0, p1};
+ * 
+ * std::vector<Line> generated_lines = koch (l, 5);
+ * ```
+ *
+ * Where: 
+ * - `p0` is the first point of the initial line
+ * - `p1` is the second point of the initial line
+ * - `l` is the initial line
+ * 
+ * And the second number of the koch function args is the number of
+ * iterations you want to do. 
+ *
  */
 
 using Point = std::pair<int, int>;
@@ -39,9 +49,6 @@ const double cos120 = cos ((2 * M_PI) / 3); // = 120 DEG
 std::vector<float> vectorize_line(const Line& line) {
 	float x = static_cast<float> (line.second.first - line.first.first);
 	float y = static_cast<float> (line.second.second - line.first.second);
-	
-	std::cout << "Vector: (" << x << ", " << y << ")" << std::endl;
-
 	return {x, y};
 }
 
@@ -50,8 +57,6 @@ void rotate_vector (std::vector<float> &v, float c, float s) {
 	float y = v[0] * s + v[1] * c;
 	v[0] = x;
 	v[1] = y;
-
-	std::cout << "Vector: (" << x << ", " << y << ")" << std::endl;
 }
 
 
@@ -76,19 +81,10 @@ std::vector<Line> koch (const Line& line, const int n) {
 	rotate_vector(v120, cos120, sin120);
 
 	Point p0 = line.first;
-	std::cout << "p0: (" << p0.first << ", " << p0.second << ")" << std::endl;
-
 	Point p1 = {static_cast<int> (p0.first + v[0]), static_cast<int>(p0.second + v[1])};
-	std::cout << "p1: (" << p1.first << ", " << p1.second << ")" << std::endl;
-
 	Point p2 = {static_cast<int> (p1.first + v60[0]), static_cast<int> (p1.second + v60[1])};
-	std::cout << "p2: (" << p2.first << ", " << p2.second << ")" << std::endl;
-
 	Point p3 = {static_cast<int> (p2.first + v120[0]), static_cast<int> (p2.second + v120[1])};
-	std::cout << "p3: (" << p3.first << ", " << p3.second << ")" << std::endl;
-
 	Point p4 = line.second;
-	std::cout << "p4: (" << p4.first << ", " << p4.second << ")" << std::endl;
 
 	std::vector<Line> subs = {
 		{p0, p1}, {p1, p2}, {p2, p3}, {p3, p4}
